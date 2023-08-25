@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon" />
+    <title>Produk</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="vendor/bootstrap/vapor.css" />
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap-icons.css" />
+    <script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.6.3.min.js"></script>
+    <style>
+      /* tulis kode CSS internal di bawah sini */
+      .border-radius {
+        border: 0.3px solid white;
+      }
+
+      .border-nav {
+        border-bottom: 1px solid white;
+      }
+
+      .gambar {
+        width: 250px auto;
+        height: 250px;
+      }
+      /* Batas Akhir penulisan kode CSS internal */
+    </style>
+  </head>
+
+  <body>
+    <!-- Tulis Kode Bootstrap Di Bawah Sini -->
+
+    <nav class="navbar navbar-dark border-nav navbar-expand-lg bisadicopy">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="images/logo/logo_kuy.png" height="40" alt="image" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav11" aria-controls="navbarNav11" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav11">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html#best-seller">Best Seller</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#our-team">Our Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#review">Review</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#contact-us">Contact US</a>
+            </li>
+          </ul>
+          <a class="btn btn-outline-light ms-md-3" href="https://wa.me/6281290465033"> <i class="bi bi-whatsapp"></i> Chat </a>
+        </div>
+      </div>
+    </nav>
+    <section class="riki-block produk text-center my-5 py-5">
+      <div class="container">
+        <h1>Pilih Produk Anda</h1>
+        <p class="fs-4">Nikmati jenis kopi pilihan dari petani ternama</p>
+        <hr class="border border-success border-3 opacity-75" />
+
+        <!-- Ini Untuk Select -->
+        <div class="form-floating col-md-6 mx-auto border-radius">
+          <select class="form-select" id="select_kopi">
+            <option disabled selected>-</option>
+            <option value="arabica">Arabica</option>
+            <option value="robusta">Robusta</option>
+            <option value="nonkopi">Non Kopi</option>
+          </select>
+          <label for="select_kopi">Pilih Jenis Kopi</label>
+        </div>
+
+        <div id="baris_produk" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 text-center mt-5"></div>
+      </div>
+    </section>
+    <footer class="riki-block footer-small py-4 bg-dark">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- <div class="col-12 col-md-8">
+            <ul class="nav justify-content-center justify-content-md-start">
+              <li class="nav-item">
+                <a class="nav-link active" href="https://www.rikikurnia.com">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.rikikurnia.com">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.rikikurnia.com">Terms</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.rikikurnia.com">About</a>
+              </li>
+            </ul>
+          </div> -->
+
+          <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-right">© septianjordanpurba. All Rights Reserved</div>
+        </div>
+      </div>
+    </footer>
+    <!-- Batas Akhir penulisan kode Bootstrap -->
+    <script>
+      /* Tulis Javascript Di bawah Sini */
+
+      var sumber = 'https://rikikurnia.com/prakerja/api/kopi';
+      var sumber2 = 'data.json';
+
+      select_kopi.onchange = function () {
+        var dipilih = select_kopi.value;
+        console.log('Nilai Kopi Diganti ke ' + dipilih);
+        /* Kode selanjutnya paste di bawah sini jangan lewat } */
+        $.getJSON(sumber2).then(function (data) {
+          var data_kopi = data[dipilih];
+          console.log(data_kopi);
+          /* Kode ketiga paste di bawah sini jangan lewat }) */
+          baris_produk.innerHTML = '';
+          data_kopi.forEach((item) => {
+            baris_produk.innerHTML += `<div class="col mb-4">
+                    <div class="card  border-radius ">
+                            <img src="${item.foto}" class="card-img-top gambar" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.nama}</h5>
+                                <div class="row hargasize my-4">
+                                    <div class="col">
+                                        ${item.size}
+                                    </div>
+                                    <div class="col fw-bold text-success">
+                                        ${item.harga}
+                                    </div>
+                                </div>
+                                <a href="${item.link}" class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-check"></i> Beli
+                                </a>
+                            </div>
+                        </div>
+                    </div>`;
+          });
+        });
+      };
+
+      /* Batas Akhir penulisan kode Javascript */
+    </script>
+  </body>
+</html>
